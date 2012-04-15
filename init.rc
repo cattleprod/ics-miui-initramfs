@@ -74,7 +74,7 @@ loglevel 3
     write /proc/cpu/alignment 4
     write /proc/sys/kernel/sched_latency_ns 10000000
     write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
-    write /proc/sys/kernel/sched_compat_yield 1
+    write /proc/sys/kernel/sched_compat_yield 0
     write /proc/sys/kernel/sched_child_runs_first 0
 
 # Create cgroup mount points for process groups
@@ -392,6 +392,11 @@ on boot
     # Tweak background writeout
     write /proc/sys/vm/dirty_expire_centisecs 200
     write /proc/sys/vm/dirty_background_ratio  5
+    write /proc/sys/vm/highmem_is_dirtyable 1
+    write /proc/sys/vm/oom_kill_allocating_task 1
+    write /proc/sys/vm/swappiness 0
+    write /proc/sys/vm/page-cluster 5
+    write /proc/sys/vm/vfs_cache_pressure 25
 
 #panorama directory creation
     mkdir /data/pxtmpdir 0775
