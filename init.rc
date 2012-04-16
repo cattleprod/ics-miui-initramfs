@@ -176,6 +176,10 @@ on post-fs-data
     mkdir /data/system
     chown system system /data/system
     chmod 0771 /data/system
+    
+    # Create directory for universal custom config
+    mkdir /data/.uci
+    chmod 777 /data/.uci
 
     # Create dump dir and collect dumps.
     # Do this before we mount cache so eventually we can use cache for
@@ -828,6 +832,10 @@ service installd /system/bin/installd
 service flash_recovery /system/etc/install-recovery.sh
     class main
     oneshot
+    
+service uci /system/bin/logwrapper /vendor/scripts/run_uci.sh
+	user root
+	oneshot
 
 service racoon /system/bin/racoon
     class main
