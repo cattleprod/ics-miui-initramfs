@@ -147,6 +147,10 @@ on post-fs
     # We chown/chmod /cache again so because mount is run as root + defaults
     chown system cache /cache
     chmod 0770 /cache
+    
+    # Create directory for universal custom config
+    mkdir /data/.uci
+    chmod 777 /data/.uci
 
     # This may have been created by the recovery system with odd permissions
     chown system cache /cache/recovery
@@ -176,10 +180,6 @@ on post-fs-data
     mkdir /data/system
     chown system system /data/system
     chmod 0771 /data/system
-    
-    # Create directory for universal custom config
-    mkdir /data/.uci
-    chmod 777 /data/.uci
 
     # Create dump dir and collect dumps.
     # Do this before we mount cache so eventually we can use cache for
@@ -832,6 +832,10 @@ service installd /system/bin/installd
 service flash_recovery /system/etc/install-recovery.sh
     class main
     oneshot
+    
+service run_parts /system/bin/logwrapper /vendor/scripts/run-parts.sh
+	user root
+	oneshot
     
 service uci /system/bin/logwrapper /vendor/scripts/run_uci.sh
 	user root
