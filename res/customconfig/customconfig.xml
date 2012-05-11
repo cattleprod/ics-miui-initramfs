@@ -103,7 +103,39 @@
 		name="TouchMove Sensitivity" action="generic /sys/devices/platform/s3c2440-i2c.3/i2c-3/3-004a/mov_hysti" unit=" pixel" min="0" reversed="false" step="1" max="20"/>
     </settingsPane>
   </settingsTab>
-
+  <settingsTab name="BLN">
+    <settingsPane description="BackLightNotification and Touchkey related Settings" name="BackLightNotification">
+       <checkbox description="BackLightNotification" name="BLN" action="generic /sys/class/misc/backlightnotification/enabled" label="BLN"/>
+       <spinner description="Notification timeout. 0: disabled" name="notification_timeout" action="generic /sys/class/misc/backlightnotification/notification_led">
+             <spinnerItem name="Never timeout" value="0"/> 
+             <spinnerItem name="1 minute" value="60000"/> 
+             <spinnerItem name="3 minutes" value="180000"/> 
+             <spinnerItem name="5 minutes" value="300000"/> 
+             <spinnerItem name="10 minutes" value="600000"/> 
+             <spinnerItem name="20 minutes" value="12000000"/> 
+             <spinnerItem name="30 minutes" value="18000000"/> 
+             <spinnerItem name="60 minutes" value="36000000"/> 
+             <spinnerItem name="120 minutes" value="72000000"/> 
+       </spinner>
+       <spinner description="This setting will set led behavior in BLN." name="BLN Effect" action="bln_effect">
+             <spinnerItem name="Steady" value="0"/> 
+             <spinnerItem name="Breathing" value="1"/> 
+             <spinnerItem name="Blinking" value="2"/> 
+       </spinner> 
+       <spinner description="Led timeout. Leave it disabled if your ROM already has led timeout support. In CM9, if you have lights enabled screen brightness changes may trigger lights on. It is normal. If you want them to stay disabled you have to disable leds in CM9 menu." name="led_timeout" action="generic /sys/class/misc/backlightnotification/led_timeout">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="1.5 sec" value="1500"/> 
+             <spinnerItem name="3 sec" value="3000"/> 
+             <spinnerItem name="6 sec" value="6000"/> 
+             <spinnerItem name="15 sec" value="15000"/> 
+             <spinnerItem name="30 sec" value="30000"/> 
+             <spinnerItem name="60 sec" value="60000"/> 
+       </spinner>
+       <button description="Use this button to test bln. BLN will be active after you turn the screen off." name="Test BLN" action="test-bln" label="Test BLN"/>
+       <seekBar description="Controls touchpad led voltage level (default: 3000)" 
+		name="Led Voltage Level" action="generic /sys/devices/virtual/sec/sec_touchkey/touchkey_brightness" unit=" mV" min="2500" reversed="false" step="50" max="3300"/>
+    </settingsPane>
+  </settingsTab>
   <settingsTab name="Misc">
     <settingsPane description="Misc Settings" name="Misc Settings">
       <button description="Back up the efs partition" name="BackupEFS" action="efs-backup" label="Backup EFS"/>
