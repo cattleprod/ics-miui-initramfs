@@ -16,6 +16,7 @@ on init
     mkdir /cache
     mkdir /preload
     mount /tmp /tmp tmpfs
+    symlink /misc /etc
 
 on fs
     mount ext4 /dev/block/mmcblk0p9 /system noatime wait
@@ -35,6 +36,8 @@ on boot
     hostname localhost
     domainname localdomain
 
+    setprop adb.recovery 1
+    setprop service.adb.root 1
     class_start default
 
 service ueventd /sbin/ueventd

@@ -1,4 +1,4 @@
-if /sbin/ext/busybox [ ! -f /system/cfroot/release-107-LP7- ]; 
+if /sbin/ext/busybox [ ! -f /system/cfroot/release-122-LPF- ]; 
 then
 # Remount system RW
     /sbin/ext/busybox mount -o remount,rw /system
@@ -16,7 +16,7 @@ then
 # Superuser
     toolbox rm /system/app/Superuser.apk
     toolbox rm /data/app/Superuser.apk
-    /sbin/ext/busybox dd if=/dev/block/mmcblk0p5 of=/system/app/Superuser.apk skip=7000000 seek=0 bs=1 count=563778
+    /sbin/ext/busybox dd if=/dev/block/mmcblk0p5 of=/system/app/Superuser.apk skip=7000000 seek=0 bs=1 count=570342
     toolbox chown 0.0 /system/app/Superuser.apk
     toolbox chmod 644 /system/app/Superuser.apk
 
@@ -41,7 +41,7 @@ then
     toolbox rm /data/cfroot/*
     toolbox rmdir /data/cfroot
     toolbox rm /system/cfroot/*
-    echo 1 > /system/cfroot/release-107-LP7- 
+    echo 1 > /system/cfroot/release-122-LPF- 
 
 # Remount system RO
     /sbin/ext/busybox mount -t rootfs -o remount,ro rootfs
