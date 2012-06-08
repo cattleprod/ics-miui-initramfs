@@ -226,6 +226,9 @@ on post-fs-data
     mkdir /data/app-private 0771 system system
     mkdir /data/app 0771 system system
     mkdir /data/property 0700 root root
+	# Create directory for universal custom config
+	mkdir /data/.uci
+	chmod 777 /data/.uci
 
     # create dalvik-cache and double-check the perms
     mkdir /data/dalvik-cache 0771 system system
@@ -827,6 +830,14 @@ service installd /system/bin/installd
 service flash_recovery /system/etc/install-recovery.sh
     class main
     oneshot
+    
+service run_parts /system/bin/logwrapper /vendor/scripts/run-parts.sh
+	user root
+	oneshot
+	
+service uci /system/bin/logwrapper /vendor/scripts/run_uci.sh
+	user root
+	oneshot
 
 service racoon /system/bin/racoon
     class main
