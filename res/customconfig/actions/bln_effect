@@ -10,11 +10,9 @@ if [ "a$2" != "a" ];then
       ;;
     1)
       echo 1 > /sys/class/misc/backlightnotification/breathing_enabled
-      echo 2500 3300 50 100 500 > /sys/class/misc/notification/breathing_config
       ;;
     2)
       echo 1 > /sys/class/misc/backlightnotification/blinking_enabled
-      echo 1000 1000 > /sys/class/misc/backlightnotification/blinking_config
       ;;
   esac;
 fi
