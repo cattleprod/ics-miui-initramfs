@@ -395,8 +395,13 @@ on boot
     write /proc/1/oom_adj -16
 
     # Tweak background writeout
-    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/dirty_expire_centisecs 500
     write /proc/sys/vm/dirty_background_ratio  5
+    write /proc/sys/vm/highmem_is_dirtyable 1
+    write /proc/sys/vm/oom_kill_allocating_task 1
+    write /proc/sys/vm/swappiness 0
+    write /proc/sys/vm/page-cluster 5
+    write /proc/sys/vm/vfs_cache_pressure 50
 
 #panorama directory creation
     mkdir /data/pxtmpdir 0775
