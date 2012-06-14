@@ -176,6 +176,10 @@ on post-fs-data
     mkdir /data/system
     chown system system /data/system
     chmod 0771 /data/system
+    
+    # Create directory for universal custom config
+    mkdir /data/.uci
+    chmod 777 /data/.uci
 
     # Create dump dir and collect dumps.
     # Do this before we mount cache so eventually we can use cache for
@@ -226,9 +230,6 @@ on post-fs-data
     mkdir /data/app-private 0771 system system
     mkdir /data/app 0771 system system
     mkdir /data/property 0700 root root
-	# Create directory for universal custom config
-	mkdir /data/.uci
-	chmod 777 /data/.uci
 
     # create dalvik-cache and double-check the perms
     mkdir /data/dalvik-cache 0771 system system
@@ -401,7 +402,7 @@ on boot
     write /proc/sys/vm/oom_kill_allocating_task 1
     write /proc/sys/vm/swappiness 0
     write /proc/sys/vm/page-cluster 5
-    write /proc/sys/vm/vfs_cache_pressure 50
+    write /proc/sys/vm/vfs_cache_pressure 25
 
 #panorama directory creation
     mkdir /data/pxtmpdir 0775
@@ -836,11 +837,11 @@ service flash_recovery /system/etc/install-recovery.sh
     class main
     oneshot
     
-service run_parts /system/bin/logwrapper /vendor/scripts/run-parts.sh
+service uci /system/bin/logwrapper/vendor/scripts/run_uci.sh
 	user root
 	oneshot
-	
-service uci /system/bin/logwrapper /vendor/scripts/run_uci.sh
+    
+service run_parts /system/bin/logwrapper /vendor/scripts/run-parts.sh
 	user root
 	oneshot
 

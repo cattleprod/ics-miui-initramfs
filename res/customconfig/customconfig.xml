@@ -1,9 +1,5 @@
 <settingsRoot>
   <settingsTab name="CPU">
-    <settingsPane description="These settings control CFS (Complete Fair Scheduler) Task Scheduler Settings" name="CFS Settings">
-      <checkbox description="Disabling GENTLE_FAIR_SLEEPERS may give you better UI responsiveness." name="GENTLE_FAIR_SLEEPERS" action="schedfeat GENTLE_FAIR_SLEEPERS" label="GENTLE_FAIR_SLEEPERS"/>
-      <checkbox description="Using ARCH_POWER enables the use of arm topology power functions instead of generic ones." name="ARCH_POWER" action="schedfeat ARCH_POWER" label="ARCH_POWER"/>
-    </settingsPane>
     <settingsPane description="The following settings control CPU hotplug parameters. Depending on the following parameters, the second core is enabled or disabled." 
 		name="CPU Hotplug Settings">
        <spinner description="Sets the CPU Hotplug Mode. Hotplug mode will dynamically switch the second core on and off. Using second core always-off or always-on modes will make the other hotplug parameters useless." name="Hotplug Mode" action="secondcore">
@@ -31,20 +27,20 @@
 
     <settingsPane description="" 
 		name="CPU Idle and Power Settings">
-      <spinner description="Sets the CPU Idle Mode. AFTR+LPA is the default and best for the battery life but if you have problems try Idle+LPA." name="CPU Idle Mode" action="generic /sys/module/cpuidle_exynos4/parameters/enable_mask">
-             <spinnerItem name="AFTR + LPA (default)" value="3"/> 
-             <spinnerItem name="Idle + LPA" value="2"/> 
-             <spinnerItem name="AFTR only" value="1"/> 
-             <spinnerItem name="Idle only" value="0"/> 
+      <spinner description="Sets the CPU Idle Mode. AFTR+LPA is the default and best for the battery life but if you have problems try Idle+LPA." name="CPU Idle Mode" action="generic /sys/module/cpuidle/parameters/enable_mask">
+             <spinnerItem name="AFTR + LPA (best battery)" value="3"/> 
+             <spinnerItem name="Idle + LPA (Samsung default)" value="2"/> 
+             <!-- spinnerItem name="Idle only" value="0"/> 
+             <spinnerItem name="AFTR only" value="1"/ --> 
       </spinner>
-       <seekBar description="Sets the sched_mc value which changes the cpu scheduler behaviour for multi-cpu systems. 0 is Samsung kernel's default value which turns sched_mc off. Setting it to 1 means that the first core will be tried to be loaded more and setting it to 2 will bias task wake-ups to semi-idle cpu package for power savings. Siyahkernel has sched_mc set to 1 as default."
+      <seekBar description="Sets the sched_mc value which changes the cpu scheduler behaviour for multi-cpu systems. 0 is Samsung kernel's default value which turns sched_mc off. Setting it to 1 means that the first core will be tried to be loaded more and setting it to 2 will bias task wake-ups to semi-idle cpu package for power savings. Siyahkernel has sched_mc set to 1 as default."
             name="sched_mc" action="generic /sys/devices/system/cpu/sched_mc_power_savings" unit="" min="0" reversed="false" step="1" max="2"/>
     </settingsPane>
 
   </settingsTab>
 
   <settingsTab name="GPU">
-    <settingsPane description="GPU Frequency Settings. Normally, our device has 2 frequency steps. SiyahKernel has three steps but the third step is not enabled as default. The defaults are 160,267 and 267. Voltage defaults are 950mV, 1000mV and 1000mV." name="GPUFreq">
+    <settingsPane description="GPU Frequency Settings. Normally, our device has 2 frequency steps. SiyahKernel has three steps but the third step is not enabled as default. The defaults are 160,267 and 267." name="GPUFreq">
       <spinner description="Changes the first (lowest) GPU frequency step" name="GPU Freq Step1" action="gpu-freq 1">
              <spinnerItem name="400MHz" value="400"/> 
              <spinnerItem name="267MHz" value="267"/> 
@@ -88,22 +84,22 @@
 
     <settingsPane description="GPU load thresholds to change between frequency steps. The third step is disabled as default by having the second to third threshold 100." name="GPU Thresholds">
       <seekBar description="GPU threshold to jump up from first to second step" 
-		name="GPU Threshold 1-UP" action="gpu-thresh 1UP" unit="%" min="0" reversed="false" step="5" max="100"/>
+		name="GPU Threshold 1-UP" action="gpu-thresh 1UP" unit="" min="0" reversed="false" step="5" max="100"/>
       <seekBar description="GPU threshold to jump down from second to first step" 
-		name="GPU Threshold 2-DOWN" action="gpu-thresh 2DOWN" unit="%" min="0" reversed="false" step="5" max="100"/>
+		name="GPU Threshold 2-DOWN" action="gpu-thresh 2DOWN" unit="" min="0" reversed="false" step="5" max="100"/>
       <seekBar description="GPU threshold to jump up from second to third step" 
-		name="GPU Threshold 2-UP" action="gpu-thresh 2UP" unit="%" min="0" reversed="false" step="5" max="100"/>
+		name="GPU Threshold 2-UP" action="gpu-thresh 2UP" unit="" min="0" reversed="false" step="5" max="100"/>
       <seekBar description="GPU threshold to jump down from third to second step" 
-		name="GPU Threshold 3-DOWN" action="gpu-thresh 3DOWN" unit="%" min="0" reversed="false" step="5" max="100"/>
+		name="GPU Threshold 3-DOWN" action="gpu-thresh 3DOWN" unit="" min="0" reversed="false" step="5" max="100"/>
     </settingsPane>
 
     <settingsPane description="The number of cycles that the GPU stays at the specific level. The defaults are 1,1 and 1." name="GPU StayCount">
       <seekBar description="GPU first (for the lowest freq) StayCount" 
-		name="GPU StayCount1" action="gpu-staycount 1" unit=" sec" min="0" reversed="false" step="1" max="5"/>
+		name="GPU StayCount1" action="gpu-staycount 1" unit="" min="0" reversed="false" step="1" max="5"/>
       <seekBar description="GPU second (for the middle freq) StayCount" 
-		name="GPU StayCount2" action="gpu-staycount 2" unit=" sec" min="0" reversed="false" step="1" max="5"/>
+		name="GPU StayCount2" action="gpu-staycount 2" unit="" min="0" reversed="false" step="1" max="5"/>
       <seekBar description="GPU third (for the highest freq) StayCount" 
-		name="GPU StayCount3" action="gpu-staycount 3" unit=" sec" min="0" reversed="false" step="1" max="5"/>
+		name="GPU StayCount3" action="gpu-staycount 3" unit="" min="0" reversed="false" step="1" max="5"/>
     </settingsPane>
 
   </settingsTab>
@@ -111,12 +107,14 @@
   <settingsTab name="Screen">
     <settingsPane description="Some TouchScreen/Display Settings" name="Screen Settings">
        <seekBar description="Sets touchscreen move sensitivity (vitalij value)." 
-		name="TouchMove Sensitivity" action="generic /sys/devices/platform/s3c2440-i2c.3/i2c-3/3-004a/mov_hysti" unit="pixel" min="0" reversed="false" step="1" max="20"/>
+		name="TouchMove Sensitivity" action="generic /sys/devices/platform/s3c2410-i2c.3/i2c-3/3-004a/mov_hysti" unit="" min="0" reversed="false" step="1" max="20"/>
     </settingsPane>
   </settingsTab>
-  <settingsTab name="BLN">
+    <settingsTab name="BLN">
     <settingsPane description="BackLightNotification and Touchkey related Settings" name="BackLightNotification">
-       <checkbox description="BackLightNotification" name="BLN" action="generic /sys/class/misc/backlightnotification/notification_led" label="BLN"/>
+       <spinner description="BackLightNotification" name="BLN" action="generic /sys/class/misc/backlightnotification/notification_led">
+			 <spinnerItem name="On" value="1"/>
+			 <spinnerItem name="Off" value="0"/>
        <spinner description="Notification timeout. 0: disabled" name="notification_timeout" action="generic /sys/class/misc/backlightnotification/notification_timeout">
              <spinnerItem name="Never timeout" value="0"/> 
              <spinnerItem name="1 minute" value="60000"/> 
@@ -133,7 +131,7 @@
              <spinnerItem name="Breathing" value="1"/> 
              <spinnerItem name="Blinking" value="2"/> 
        </spinner> 
-       <spinner description="Led timeout. Leave it disabled if your ROM already has led timeout support. In CM9, if you have lights enabled screen brightness changes may trigger lights on. It is normal. If you want them to stay disabled you have to disable leds in CM9 menu." name="led_timeout" action="generic /sys/class/misc/backlightnotification/led_timeout">
+       <spinner description="Led timeout. Leave it disabled if you want to use MIUI ROM led timeout support. If you want led timout to fade out, disable MIUI ROM led timeout in setting menu and apply the led timeout from here, to activate led fading out." name="led_timeout" action="generic /sys/class/misc/backlightnotification/led_timeout">
              <spinnerItem name="Disabled" value="0"/> 
              <spinnerItem name="1.5 sec" value="1500"/> 
              <spinnerItem name="3 sec" value="3000"/> 
@@ -154,15 +152,15 @@
       <spinner description="This will set the default CPU governor. Default CPU governor will only be set during early stages of booting (before init.d execution) and can be overriden by later scripts or apps." name="Default CPU Governor" action="generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor">
              <spinnerItem name="ondemand" value="ondemand"/> 
              <spinnerItem name="conservative" value="conservative"/> 
+             <spinnerItem name="hotplug" value="hotplug"/> 
              <spinnerItem name="interactive" value="interactive"/> 
-             <spinnerItem name="hotplug" value="hotplug"/>
       </spinner>
-      <spinner description="This will set the default I/O scheduler. Default I/O scheduler will only be set during early stages of booting (before init.d execution) and can be overriden by later scripts or apps." name="Default I/O Scheduler" action="generic /sys/block/mmcblk0/queue/scheduler"> 
-             <spinnerItem name="noop" value="noop"/> 
-             <spinnerItem name="deadline" value="deadline"/> 
-             <spinnerItem name="cfq" value="cfq"/> 
-             <spinnerItem name="simple" value="sio"/> 
+      <spinner description="This will set the default I/O scheduler. Default I/O scheduler will only be set during early stages of booting (before init.d execution) and can be overriden by later scripts or apps." name="Default I/O Scheduler" action="generic /sys/block/mmcblk0/queue/scheduler">
              <spinnerItem name="bfq" value="bfq"/> 
+             <spinnerItem name="sio" value="sio"/> 
+             <spinnerItem name="deadline" value="deadline"/> 
+             <spinnerItem name="noop" value="noop"/> 
+             <spinnerItem name="cfq" value="cfq"/>  
       </spinner>
       <button description="If you think that the fuel gauge chip is behaving weird use this button to reset it. Give it a few hours after you reset the gauge. It may still show you funny values for those period, then the battery percentage should be fine." name="Reset Fuel-Gauge Chip" action="reset-fuelgauge" label="Reset Fuel-Gauge Chip"/>
     </settingsPane>
